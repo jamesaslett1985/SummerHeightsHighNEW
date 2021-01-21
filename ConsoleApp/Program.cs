@@ -45,7 +45,7 @@ namespace Code
             while (char.ToLower(Console.ReadKey().KeyChar) == 'y');
         }
 
-        private static void DisplayListOfCharacters()
+        public static void DisplayListOfCharacters()
         {
             var listOfCharacters = SummerHeightsHighService.Characters.Keys.ToArray();
 

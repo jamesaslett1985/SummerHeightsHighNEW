@@ -1,8 +1,15 @@
-﻿@{
+﻿@model Characters
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Summer Heights High</h1>
+    <p>Character Lookup System</p>
+    <p style="color:red;"><b><i>User should be select a name and click button, then character details should display below. Instead of the input box, could we populate a dropdown from DisplayListOfCharacters?</i></b></p>
+    <label for="CharacterList">Please select a character:</label>
+    <select asp-for="CharacterList" asp-items="@Model.SelectableCharacters" class="all-width">
+        <option value="">Choose</option>
+    </select>
+    <button>Let's go!</button>
 </div>

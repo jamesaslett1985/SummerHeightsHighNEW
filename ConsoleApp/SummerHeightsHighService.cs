@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Code
 {
-    class SummerHeightsHighService
+    public class SummerHeightsHighService
     {
         public static Dictionary<string, ICharacter> Characters = new Dictionary<string, ICharacter>
         {

@@ -1,0 +1,74 @@
+﻿@model CheatSheet
+@{
+    ViewData["Title"] = "Cheat Sheet Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Cheat Sheet</h1>
+
+    @*FORM TAGS*@
+    @*form tag should be around any form elements that you want to submit back to the server, including inputs, textareas etc*@
+<form method="post" asp-controller="CheatSheet" asp-action="Index">
+    <h3>LABELS</h3>
+    <p>If you give the label's <i>for</i> attribute the same value as the control's ID, it'll link them. This will make the label area clickable as well.</p>
+    <div>
+        <label for="FirstName">First name:</label>
+        <input asp-for="FirstName" />
+    </div>
+    <p>
+        To connect the label to a Model use <i>asp-for</i>. Note that you no longer have to specify the text of the label as it'll be pulled from the Model, and the
+        HTML for attribute will be automatically generated.
+    </p>
+    <div>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+    </div>
+    <h3>INPUTS</h3>
+    <p>The Input Tag Helper only has the <i>asp-for</i> attribute. This allows you to bind the Input control to a property on the Model. In this case the input is populated with 'Aslett' because this value is set in the Model.</p>
+    <div>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />
+    </div>
+    <br />
+
+    <h5>Using Data Annotations to denote type</h5>
+
+    <div>
+        <label asp-for="MailAddress"></label>
+        <input asp-for="MailAddress" />
+    </div>
+    <div>
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" />
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+    </div>
+    <div>
+        <label asp-for="DateOfBirth"></label>
+        <input asp-for="DateOfBirth" />
+    </div>
+    <div>
+        <label asp-for="IsActive"></label>
+        <input asp-for="IsActive" />
+    </div>
+
+    <h3>TEXTAREA</h3>
+    <p>The TextArea Tag Helper uses the <i>asp-for.</i> If no size is specified then it will be decided by the browser:</p>
+
+    <textarea asp-for="TextArea"></textarea>
+
+    <p>Or you can specify a size in the markup:</p>
+
+    <textarea asp-for="TextArea" style="height: 40px; width: 200px;"></textarea>
+
+    <p>You can also specify min and max lengths in the Model. This has a min of 2 and a max of 25:</p>
+
+    <textarea asp-for="TextAreaLength"></textarea>
+
+    <p>Min lengths aren't part of the HTML specification, so there's no relevant attribute for the browser to work with. However, it's still relevant to specify on the Model, especially if you use Model Validation. The rendered result will show you that only max length is directly supported by the HTML specification - the min length is only rendered as a data attribute, to be used by client-side Model Validation.</p>
+
+
+</form>
+</div>
