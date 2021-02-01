@@ -23,6 +23,7 @@
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" />
     </div>
+    <br />
     <h3>INPUTS</h3>
     <p>The Input Tag Helper only has the <i>asp-for</i> attribute. This allows you to bind the Input control to a property on the Model. In this case the input is populated with 'Aslett' because this value is set in the Model.</p>
     <div>
@@ -32,7 +33,6 @@
     <br />
 
     <h5>Using Data Annotations to denote type</h5>
-
     <div>
         <label asp-for="MailAddress"></label>
         <input asp-for="MailAddress" />
@@ -53,7 +53,7 @@
         <label asp-for="IsActive"></label>
         <input asp-for="IsActive" />
     </div>
-
+    <br />
     <h3>TEXTAREA</h3>
     <p>The TextArea Tag Helper uses the <i>asp-for.</i> If no size is specified then it will be decided by the browser:</p>
 
@@ -68,6 +68,75 @@
     <textarea asp-for="TextAreaLength"></textarea>
 
     <p>Min lengths aren't part of the HTML specification, so there's no relevant attribute for the browser to work with. However, it's still relevant to specify on the Model, especially if you use Model Validation. The rendered result will show you that only max length is directly supported by the HTML specification - the min length is only rendered as a data attribute, to be used by client-side Model Validation.</p>
+
+    <h3>SELECT</h3>
+    <p>The Select Tag Helper has the <i>asp-for</i> attribute, which allows you to bind its selected value to a specific property on the Model. The <i>asp-items</i> tag allows you to provide a data source for the SELECT element. In this example the options are held in the Model:</p>
+
+    <label asp-for="Gender" class="control-lable"></label>
+    <select asp-for="Gender" asp-items="Model.Genders" class="custom-select">
+        <option value="">Choose Gender</option>
+    </select>
+    <br />
+    <br />
+    <p>In this example the options are held in the Controller and passed through to the View:</p>
+
+    <select asp-items="@(new SelectList(Model.Countries.Select(x => x.Name)))" asp-for="SelectedCountry"></select>
+    <br />
+    <br />
+    <p>In the above examples no values are provided for the option tags, meaning that the text of the option will be used as the value when submitting. That's because we are generating the options from a simple list of strings, however in most situations you are more likely to generate lists based on a combination of keys and values, eg: the values may come from a database, where they use a number as ID's.</p>
+
+    <select asp-items="@(new SelectList(Model.Countries, "Abbreviation", "Name"))" asp-for="SelectedCountry"></select>
+
+    <select asp-items="@(new SelectList(Model.Countries, "Abbreviation", "NameAndAbbreviation"))" asp-for="SelectedCountry"></select>
+
+    <select asp-items="@Model.Countries.Select(x => new SelectListItem(x.Name, x.Abbreviation))" asp-for="SelectedCountry"></select>
+    <br />
+    <br />
+    <p>Another very common usage is with enumerations (enums), for example the DayOfWeek enumeration. This will assign numbers to the values, starting at 0:</p>
+
+    <select asp-items="@(Html.GetEnumSelectList<DayOfWeek>())" asp-for="SelectedDay"></select>
+    <br />
+    <br />
+    <h3>ANCHOR TAG</h3>
+
+    <p>The Anchor Tag Helper can help you link to Actions on your Controller. The most commonly used attributes are <i>controller</i> and <i>action</i>, allowing you to speficy which Controller and Action to use.</p>
+
+    <a asp-controller="Home" asp-action="Index">Link to Index Action on Home controller</a>
+    <br />
+    <br />
+
+    <a asp-controller="Jonah" asp-action="Index">Link to Index Action on Jonah Controller</a>
+    <br />
+    <br />
+
+    <p>There is also an <i>asp-route-{value}</i> attribute. Any value added in place of {value} is considered a route parameter. If a default route is not found, this value will be used to generate the URL as a request parameter and value:</p>
+
+    <a asp-controller="CheatSheet" asp-action="Index" asp-route-id="12">Link to Jonah/Index/12</a>
+    <br />
+    <br />
+    <p>In this example we generate a new link for each of the movies in the list and generate a new URL for each of them:</p>
+    <ul>
+        @foreach (var movie in Model.Movies)
+        {
+            <li>
+                <a asp-controller="CheatSheet" asp-action="Index" asp-route-id="@movie.Id">@movie.Title</a>
+            </li>
+        }
+    </ul>
+
+    <p>If you want to refer to a specific part of the page, use the <i>asp-fragment</i> attribute:</p>
+
+    <a asp-controller="CheatSheet" asp-action="Index" asp-fragment="test">Link using asp-fragment</a>
+
+    <p>This enables you to link to an element on the same page that you're currently on, eg: for jumping to certain sections</p>
+
+    <p>If you need to specify the host name in the link, eg: google.com then use <i>asp-host</i>. Usually not necessary because the value can be fetched from the website automatically:</p>
+
+    <a asp-controller="CheatSheet" asp-action="Index" asp-host="google.com">Link using asp-host</a>
+
+    <p>If you want to force a protocol other than the one used, eg: from http to https then use <i>asp-protocol</i>:</p>
+
+    <a asp-controller="CheatSheet" asp-action="Index" asp-host="google.com" asp-protocol="https">Movie list</a>
 
 
 </form>
