@@ -137,6 +137,34 @@
     <p>If you want to force a protocol other than the one used, eg: from http to https then use <i>asp-protocol</i>:</p>
 
     <a asp-controller="CheatSheet" asp-action="Index" asp-host="google.com" asp-protocol="https">Movie list</a>
+    <br />
+    <br />
+    <h3>SCRIPT TAG</h3>
+
+    <p>To import script files. Best practice is to use CDN with a local fallback. The Script Tag Helper can help with this. The Script Tag helper requires a value for the <i>fallback-src</i> attribute, as an alternative to the regular <i>src</i> attribute:</p>
+
+    @Html.Raw("&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js&quot; asp-fallback-src=&quot;~&#47;Content&#47;jquery.min.js&quot;&gt;&lt;&#47;script&gt")
+
+    <br />
+    <br />
+    <p>In this case, jQuery will be loaded from cdnjs first, but if that fails a local version will be requested instead. However, detecting that the CDN has failed to deliver the required JS file can be difficult, but it can be achieved with the <i>fallback-test</i> attribute:</p>
+
+    @Html.Raw("&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js&quot; asp-fallback-src=&quot;~&#47;Content&#47;jquery.min.js&quot; asp-fallback-test=&quot;window.jQuery&quot;&gt&lt;&#47;script&gt")
+    <br />
+    <br />
+    <p>This will ensure that if the CDN version didn't load then the fallback will be used.</p>
+    <br />
+    <br />
+    <h3>LINK TAG</h3>
+
+    <p>To import CSS files. Uses the <i>href</i> to dictate which file to use, and <i>fallback-href</i>, which will be the path used if the CDN version fails:</p>
+
+    @Html.Raw("&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js&quot; asp-fallback-href=&quot;~/Content/bootstrap.min.css&quot; /&gt;")
+
+    <p>In this case, the CSS for Bootstrap will be loaded from cdnjs, and it that fails a local version will be requested. However, detecting that the CDN has failed to deliver the required CSS file can be difficult, but the Link Tag Helper can help you with this.</p>
+
+    <p>Loading CSS from a CDN may fail silently, meaning that your page will look wrong because of the missing CSS. We can use the one or several attributes for testing whether the desired CSS was loaded properly. Further reading <a href="https://asp.mvc-tutorial.com/tag-helpers/the-link-tag-helper/">here</a></p>
+
 
 
 </form>
